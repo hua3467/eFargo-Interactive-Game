@@ -1,0 +1,68 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!78 &1
+TagManager:
+  serializedVersion: 2
+  tags:
+  - Enemies
+  - Rooms
+  - Background
+  - Light
+  layers:
+  - Default
+  - TransparentFX
+  - Ignore Raycast
+  - 
+  - Water
+  - UI
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  m_SortingLayers:
+  - name: Default
+    uniqueID: 0
+    locked: 0
+  - name: Rooms
+    uniqueID: 2093680177
+    locked: 0
+  - name: Enemies
+    uniqueID: 2807303803
+    locked: 0
+  - name: Interactables
+    uniqueID: 4148358357
+    locked: 0
+  - name: Popups
+    uniqueID: 1384439713
+    locked: 0
+  - name: UI
+    uniqueID: 4094331183
+    locked: 0
+  - name: Draggable Enemy
+    uniqueID: 2691311181
+    locked: 0
+  - name: Debug
+    uniqueID: 901236299
+    locked: 0
