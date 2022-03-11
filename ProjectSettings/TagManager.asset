@@ -8,6 +8,8 @@ TagManager:
   - Rooms
   - Background
   - Light
+  - PrefabRooms
+  - ChallengeController
   layers:
   - Default
   - TransparentFX
