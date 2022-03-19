@@ -23,6 +23,10 @@ public class RoomLoadController : MonoBehaviour
             // would rather not make this a magic number, but oh well
             newRoom.transform.localScale = new Vector3(.45f, .45f, .45f);
             newRoom.name = room.Name;
+            
+            // set mapping for click to room scene
+            var hoverScript = newRoom.GetComponent<ClassroomHover>();
+            hoverScript.sceneName = newRoom.name;
         }
     }
 

@@ -1,8 +1,9 @@
+using System;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
 
-public class ClassroomHover : MonoBehaviour, IClickable
+public class ClassroomHover : MonoBehaviour
 {
     public string sceneName;
     
@@ -35,13 +36,8 @@ public class ClassroomHover : MonoBehaviour, IClickable
         }
     }
 
-    public void Clicked()
+    public void OnMouseDown()
     {
         SceneManager.LoadScene(sceneName);
-    }
-
-    public void UnClicked()
-    {
-        
     }
 }
