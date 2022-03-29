@@ -7,6 +7,9 @@ using UnityEngine;
 public class Challenge
 {
     public Sprite Monster;
+
+    [NonSerialized]
+    public bool Completed = false;
     
     [JsonProperty("Dialog")]
     public readonly Queue<string> Dialog;
@@ -31,10 +34,5 @@ public class Challenge
         MonsterName = monsterName;
         CarbonCoins = carbonCoins;
         SceneName = sceneName;
-    }
-
-    public void ExecuteChallenge()
-    {
-        
     }
 }

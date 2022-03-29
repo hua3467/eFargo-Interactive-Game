@@ -55,6 +55,7 @@ public class ChallengeController : MonoBehaviour
         if (challenge.Dialog.Count == 0)
         {
             ChallengeComplete();
+            Debug.Log("Challenge completed");
             return;
         }
         var option = challenge.Dialog.Dequeue();
@@ -85,6 +86,7 @@ public class ChallengeController : MonoBehaviour
 
     private void ChallengeComplete()
     {
-        // TODO: increment carbon coins for user here
+        // TODO: increment carbon coins here
+        challenge.Completed = true;
     }
 }

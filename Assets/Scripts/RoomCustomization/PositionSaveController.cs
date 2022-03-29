@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
 using System.IO;
+using System.Runtime.InteropServices;
 using Newtonsoft.Json;
 
 namespace RoomCustomization
@@ -8,13 +9,15 @@ namespace RoomCustomization
     public class PositionSaveController : MonoBehaviour
     {
         public List<GameObject> placedRooms;
+        
+        private readonly List<RoomInfo> _rooms = new();
 
-        // dictionary for json structure of "name: [transform, SpritePath]"
-        private List<RoomInfo> _rooms = new List<RoomInfo>();
+        [DllImport("__Internal")]
+        private static extern void PostJson(string path, string value, string objectName, string callback, string fallback);
 
         public void OnSave()
         {
-            Debug.Log("Saved");
+            Debug.Log("Saving...");
             foreach (var room in placedRooms)
             {
                 var roomInfo = new RoomInfo(room.transform.position, 
@@ -22,13 +25,14 @@ namespace RoomCustomization
                     room.name);
                 _rooms.Add(roomInfo);
             }
+            SaveJson();
+            Debug.Log("Written to db!");
+        }
 
+        public void SaveJson()
+        {
             var output = JsonConvert.SerializeObject(_rooms);
-            using (var w = new StreamWriter("./Assets/Scripts/RoomMapping/RoomSaving.json"))
-            {
-                w.Write(output);
-            }
-            
+            PostJson("path_here", output, "SchoolCustomization", "null", "null");
         }
     }
 }
