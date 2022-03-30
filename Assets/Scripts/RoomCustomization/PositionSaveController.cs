@@ -32,7 +32,7 @@ namespace RoomCustomization
         public void SaveJson()
         {
             var output = JsonConvert.SerializeObject(_rooms);
-            PostJson("path_here", output, "SchoolCustomization", "null", "null");
+            PostJson("SchoolCustomization", output, "SchoolCustomization", "null", "null");
         }
     }
 }

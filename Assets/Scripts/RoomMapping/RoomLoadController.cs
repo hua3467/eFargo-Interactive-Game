@@ -10,12 +10,14 @@ public class RoomLoadController : MonoBehaviour
 {
     public List<GameObject> preloadedRooms;
 
+    private List<RoomInfo> roomList;
+
     [DllImport("__Internal")]
-    private static extern string GetJson(string path, string objectName, string callback, string fallback);
+    private static extern void GetJson(string path, string objectName, string callback, string fallback);
     
     void Start()
     {
-        var roomList = LoadRoomPositions();
+        GetJson("SchoolCustomization", "SchoolCustomization", "LoadRoomPositions", "null");
         foreach (var room in roomList)
         {
             var query = from GameObject obj in preloadedRooms where obj.name == room.Name select obj;
@@ -33,10 +35,8 @@ public class RoomLoadController : MonoBehaviour
         }
     }
 
-    private List<RoomInfo> LoadRoomPositions()
+    private void LoadRoomPositions(string data)
     {
-        string json = GetJson("path_here", "SchoolCustomization", "null", "null");
-        var rooms = JsonConvert.DeserializeObject<List<RoomInfo>>(json);
-        return rooms;
+        roomList = JsonConvert.DeserializeObject<List<RoomInfo>>(data);
     }
 }
