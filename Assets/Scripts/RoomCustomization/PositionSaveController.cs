@@ -1,8 +1,9 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using System.Collections.Generic;
-using System.IO;
 using System.Runtime.InteropServices;
 using Newtonsoft.Json;
+using UnityEngine.SceneManagement;
 
 namespace RoomCustomization
 {
@@ -14,6 +15,18 @@ namespace RoomCustomization
 
         [DllImport("__Internal")]
         private static extern void PostJson(string path, string value, string objectName, string callback, string fallback);
+
+        private void Update()
+        {
+            foreach (var room in placedRooms)
+            {
+                if (room == null)
+                {
+                    placedRooms.Remove(room);
+                    break;
+                }
+            }
+        }
 
         public void OnSave()
         {
@@ -27,12 +40,13 @@ namespace RoomCustomization
             }
             SaveJson();
             Debug.Log("Written to db!");
+            SceneManager.LoadScene("SchoolView");
         }
 
         public void SaveJson()
         {
             var output = JsonConvert.SerializeObject(_rooms);
-            PostJson("SchoolCustomization", output, "SchoolCustomization", "null", "null");
+            PostJson("SchoolCustomization", output, gameObject.name, "null", "null");
         }
     }
 }

@@ -1,4 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections;
+using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 namespace Interactable.Draggable
@@ -9,11 +12,28 @@ namespace Interactable.Draggable
         public List<Draggable> draggableObjects;
         public float snapRange = 0.5f;
 
+        private void Start()
+        {
+            foreach (var snapPoint in snapPoints)
+            {
+                snapPoint.gameObject.SetActive(false);
+            }
+        }
+
         private void Update()
         {
             foreach (var draggable in draggableObjects)
             {
+                draggable.DragStartedCallback = OnDragBegin;
                 draggable.DragEndedCallback = OnDragEnded;
+            }
+        }
+
+        private void OnDragBegin()
+        {
+            foreach (var snapPoint in snapPoints)
+            {
+                snapPoint.gameObject.SetActive(true);
             }
         }
 
@@ -44,6 +64,17 @@ namespace Interactable.Draggable
             else
             {
                 Destroy(spawnedGameObject.gameObject);
+            }
+
+            StartCoroutine(HideSnapPoints());
+        }
+
+        private IEnumerator HideSnapPoints()
+        {
+            yield return new WaitForSeconds(.5f);
+            foreach (var snapPoint in snapPoints)
+            {
+                snapPoint.gameObject.SetActive(false);
             }
         }
     }

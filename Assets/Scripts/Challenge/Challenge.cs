@@ -10,8 +10,10 @@ public class Challenge
 
     [NonSerialized]
     public bool Completed = false;
+
+    [JsonProperty("ChallengeName")] 
+    public string ChallengeName { get; set; }
     
-    [JsonProperty("Dialog")]
     public readonly Queue<string> Dialog;
     
     [JsonProperty("TagType")]
@@ -27,8 +29,9 @@ public class Challenge
     public string SceneName { get; set; }
 
     [JsonConstructor]
-    public Challenge(List<string> dialog, string tagType, string monsterName, int carbonCoins, string sceneName)
+    public Challenge(string challengeName, string[] dialog, string tagType, string monsterName, int carbonCoins, string sceneName)
     {
+        ChallengeName = challengeName;
         Dialog = new Queue<string>(dialog);
         TagType = tagType;
         MonsterName = monsterName;

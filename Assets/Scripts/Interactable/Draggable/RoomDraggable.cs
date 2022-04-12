@@ -24,6 +24,8 @@ namespace Interactable.Draggable
             
             MouseDragStartPosition = MainCamera.ScreenToWorldPoint(Input.mousePosition);
             SpriteDragStartPosition = DraggableObject.transform.localPosition;
+
+            DragStartedCallback();
         }
         
         public override void OnMouseUp()

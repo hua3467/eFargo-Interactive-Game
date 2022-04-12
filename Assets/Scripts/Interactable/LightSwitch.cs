@@ -5,19 +5,13 @@ namespace Interactable
 {
     public class LightSwitch: MonoBehaviour
     {
-        public GameObject background;
-
-        private RoomLighting _script;
-        
-        
-        private void Start()
-        {
-            _script = background.GetComponent<RoomLighting>();
-        }
+        public RoomLighting background;
 
         private void OnMouseDown()
         {
-            _script.roomLightsOn = !_script.roomLightsOn;
+            background.roomLightsOn = !background.roomLightsOn;
+            var renderer = GetComponent<SpriteRenderer>();
+            renderer.flipY = !renderer.flipY;
         }
     }
 }

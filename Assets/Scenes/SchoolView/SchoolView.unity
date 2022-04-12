@@ -208,6 +208,56 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &64923304
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 64923306}
+  - component: {fileID: 64923305}
+  m_Layer: 0
+  m_Name: ChallengeUILoadController
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &64923305
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 64923304}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0cff0c1fe582d954c8cebfb1302b28da, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  challengeButtonPrefab: {fileID: 1930148797}
+  challengeMenuContainer: {fileID: 1653503260}
+  challengeMenuTop: {fileID: 686077544}
+  offset: -7
+  loadController: {fileID: 1295662976}
+  challenges: []
+--- !u!4 &64923306
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 64923304}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -12.9127245, y: -3.298583, z: 108.81609}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &184989493
 GameObject:
   m_ObjectHideFlags: 0
@@ -311,7 +361,7 @@ PolygonCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 34.49531, y: 20.33}
+    oldSize: {x: 34.489998, y: 20.34371}
     newSize: {x: 34.49531, y: 20.33}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -561,7 +611,7 @@ Transform:
   - {fileID: 1752100603}
   - {fileID: 184989495}
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &231103956
 GameObject:
@@ -628,7 +678,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &270596807
 GameObject:
@@ -733,7 +783,7 @@ PolygonCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 34.36143, y: 21.09}
+    oldSize: {x: 34.36, y: 21.105898}
     newSize: {x: 34.36143, y: 21.09}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -1528,7 +1578,7 @@ PolygonCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 34.72, y: 20.496328}
+    oldSize: {x: 34.738014, y: 20.490002}
     newSize: {x: 34.72, y: 20.496328}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -1867,7 +1917,7 @@ PolygonCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 34.569435, y: 20.61}
+    oldSize: {x: 34.56, y: 20.62125}
     newSize: {x: 34.569435, y: 20.61}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -2485,7 +2535,7 @@ PolygonCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 34.4, y: 20.37461}
+    oldSize: {x: 34.420593, y: 20.37}
     newSize: {x: 34.4, y: 20.37461}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -2753,6 +2803,15 @@ MonoBehaviour:
   challengeButtonPrefab: {fileID: 4075308735661140155, guid: a7ffde974f01c6240876ec39e6aedea7, type: 3}
   challengeMenuContainer: {fileID: 1653503260}
   challengeMenuTop: {fileID: 686077544}
+  monsterSprites:
+  - {fileID: 21300000, guid: a28be931b4d9fd54a88519636f321c9a, type: 3}
+  - {fileID: 21300000, guid: 5b8bb252a728d0f41bf86a89e0faabfb, type: 3}
+  - {fileID: 21300000, guid: 90ff44e4039ca234f9ef1dc6f87898a7, type: 3}
+  - {fileID: 21300000, guid: e5e9b646ed0e18c42bcb1342eb7903cf, type: 3}
+  - {fileID: 21300000, guid: 1333b60df8186af4389ef6e0bfa430d5, type: 3}
+  - {fileID: 21300000, guid: de959720cdb950044a35e459f1693638, type: 3}
+  - {fileID: 21300000, guid: daf69cfd1fa1ab84fa98c4ee89a06bef, type: 3}
+  _challenges: []
 --- !u!1 &1312817579
 GameObject:
   m_ObjectHideFlags: 0
@@ -3186,7 +3245,7 @@ PolygonCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 43.04, y: 23.474455}
+    oldSize: {x: 43.070393, y: 23.47}
     newSize: {x: 43.04, y: 23.474455}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -3564,7 +3623,7 @@ PolygonCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 33.971947, y: 21.05}
+    oldSize: {x: 33.96, y: 21.05918}
     newSize: {x: 33.971947, y: 21.05}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -3870,7 +3929,7 @@ PolygonCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 44, y: 22.751953}
+    oldSize: {x: 44.037804, y: 22.749998}
     newSize: {x: 44, y: 22.751953}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -4561,7 +4620,7 @@ PolygonCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 34.72, y: 21.174454}
+    oldSize: {x: 34.740513, y: 21.17}
     newSize: {x: 34.72, y: 21.174454}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -4998,7 +5057,7 @@ PolygonCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 20.44, y: 13.41}
+    oldSize: {x: 20.44, y: 13.413749}
     newSize: {x: 20.44, y: 13.41}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -5406,7 +5465,7 @@ PolygonCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 34.96, y: 20.77457}
+    oldSize: {x: 34.981052, y: 20.77}
     newSize: {x: 34.96, y: 20.77457}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
