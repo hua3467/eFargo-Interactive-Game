@@ -10,6 +10,7 @@ TagManager:
   - Light
   - PrefabRooms
   - ChallengeController
+  - Temp
   layers:
   - Default
   - TransparentFX

@@ -1,51 +1,96 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Runtime.InteropServices;
+﻿using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class ChallengeLoadController : MonoBehaviour
+public class ChallengeLoadController : MonoBehaviour, ISingleton
 {
-    public GameObject challengeButtonPrefab;
-    public GameObject challengeMenuContainer;
-    public Transform challengeMenuTop;
+    public List<Sprite> monsterSprites;
 
-    private readonly List<Challenge> _challenges = new();
+    public List<Challenge> _challenges = new();
     private Challenge _runChallenge;
+    
+    private static ChallengeLoadController Instance { get; set; }
+    private void Awake() 
+    { 
+        // If there is an instance, and it's not me, delete myself.
+    
+        if (Instance != null && Instance != this) 
+        { 
+            Destroy(this);
+        } 
+        else 
+        { 
+            Instance = this; 
+        }
+    }
+
+    private void OnEnable()
+    {
+        SceneManager.sceneLoaded += OnSceneLoaded;
+        SceneManager.sceneLoaded += RunChallenge;
+    }
+
+    private void OnSceneLoaded(Scene scene, LoadSceneMode loadSceneMode)
+    {
+        if (scene.name != "SchoolView")
+        {
+            return;
+        }
+        
+        CreateChallengeUI();
+    }
 
     private void Start()
     {
         DontDestroyOnLoad(this);
-        SceneManager.sceneLoaded += RunChallenge;
-        
         // TODO: Load from DB here
-        _challenges.Add(new Challenge(new List<string> { "Let's play light black out hour", "Drag and drop me on any artificial light source", "TAG", "Describe the tag, how would you solve the issue", "<Journaling here>", "Tag successfully created" }, "Light", "Bulb", 250, "RoomView"));
-        
-        var offset = 0f;
-        for(int i = 0; i < _challenges.Count; i++)
+        _challenges.Add(new Challenge("Light Blackout Hour", new[] { "Let's play light black out hour", "Drag and drop me on all the artificial light sources", "<TAG>", "<JOURNAL>/Awesome, what could you do to reduce the energy usage of artificial lights?", "Tag successfully created", "Let's try turning off the lights, click on the light switch and open the blinds to let natural light in", "Awesome! Enjoy the sunshine!" }, "Light", "Bulb", 250, "classroom 1"));
+        _challenges.Add(new Challenge("Daily Hot and Cold",new[] {"Let's play Daily Hot and Cold!", "Drag and drop me on all the heating or cooling devices", "<TAG>", "<JOURNAL>/How should the classroom's thermostat be set so the least energy is used?", "Tag successfully created", "Double check to see the thermostat is set at an appropriate temperature", "Awesome! You've completed the challenge!"}, "Temp", "AC", 250, "classroom 1"));
+        foreach(var challenge in _challenges)
         {
-            var challengeMenuTopOffset = challengeMenuTop.position + new Vector3(0, offset, 0);
-            offset += 4f;
-            var challengeButton = Instantiate(challengeButtonPrefab, challengeMenuTopOffset, Quaternion.identity);
-            challengeButton.transform.parent = challengeMenuContainer.transform;
-            challengeButton.transform.localScale = challengeMenuTop.localScale;
-            var buttonScript = challengeButton.GetComponentInChildren<ChallengeButton>();
-            buttonScript.loadController = this;
-            buttonScript.Index = i;
+            foreach (var sprite in monsterSprites)
+            {
+                if (challenge.MonsterName.ToLower().Equals(sprite.name.ToLower()))
+                {
+                    challenge.Monster = sprite;
+                    break;
+                }
+            }
         }
+        CreateChallengeUI();
+    }
+
+    private void CreateChallengeUI()
+    {
+        var uiLoadController = GameObject.Find("ChallengeUILoadController").GetComponent<ChallengeUILoadController>();
+        uiLoadController.challenges = _challenges;
+        uiLoadController.loadController = this;
+        
+        uiLoadController.CreateChallengeListUI();
     }
 
     public void LoadSceneChallenge(int index)
     {
+        var output = "";
+        foreach (var str in _challenges[index].Dialog)
+        {
+            output += str;
+        }
+        Debug.Log(output);
         Debug.Log("Running challenge...");
         _runChallenge = _challenges[index];
         SceneManager.LoadScene(_runChallenge.SceneName);
-        
     }
 
-    public void RunChallenge(Scene scene, LoadSceneMode loadSceneMode)
+    private void RunChallenge(Scene scene, LoadSceneMode loadSceneMode)
     {
+        if (scene.name == "SchoolView")
+        {
+            return;
+        }
         var challengeController = GameObject.FindGameObjectWithTag("ChallengeController").GetComponent<ChallengeController>();
         challengeController.challenge = _runChallenge;
+        challengeController.InitiateChallenge();
     }
 }

@@ -9,7 +9,8 @@ using UnityEngine.UI;
 public class ChallengeButton : MonoBehaviour
 {
     public ChallengeLoadController loadController;
-
+    public GameObject completedCheckMark;
+    
     [NonSerialized] public int Index;
 
     private void Start()

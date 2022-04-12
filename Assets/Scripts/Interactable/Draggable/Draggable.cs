@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 namespace Interactable.Draggable
@@ -7,10 +8,12 @@ namespace Interactable.Draggable
         public GameObject spawnedPrefab;
         public bool spawnedObjectRequiresExternalSnapPoint;
         public Sprite spawnedObjectSprite;
-        
+
+        public delegate void DragStartedDelegate();
         public delegate void DragEndedDelegate(PlacedObject spawnedGameObject, bool spawnedObjectRequiresExternalSnapPoint);
 
         public DragEndedDelegate DragEndedCallback;
+        public DragStartedDelegate DragStartedCallback;
 
         protected bool IsDragged;
         protected Vector3 MouseDragStartPosition;
@@ -36,6 +39,8 @@ namespace Interactable.Draggable
             DraggableObject.name = gameObject.name;
             MouseDragStartPosition = MainCamera.ScreenToWorldPoint(Input.mousePosition);
             SpriteDragStartPosition = DraggableObject.transform.localPosition;
+
+            DragStartedCallback();
         }
 
         private void OnMouseDrag()

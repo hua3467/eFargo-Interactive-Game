@@ -1,19 +1,28 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Runtime.InteropServices;
 using UnityEngine;
 using Newtonsoft.Json;
 using RoomCustomization;
-using Utilities;
 
 public class RoomLoadController : MonoBehaviour
 {
     public List<GameObject> preloadedRooms;
+
+    private List<RoomInfo> _roomList;
+
+    [DllImport("__Internal")]
+    private static extern string GetJson(string path, string objectName, string callback, string fallback);
     
     void Start()
     {
-        var roomList = LoadRoomPositions();
-        foreach (var room in roomList)
+        GetJson("SchoolCustomization", gameObject.name, "LoadRoomPositions", "LoadRoomPositions");
+    }
+
+    private void LoadRooms()
+    {
+        foreach (var room in _roomList)
         {
             var query = from GameObject obj in preloadedRooms where obj.name == room.Name select obj;
             var roomTransform = new Vector3(room.Transform[0], room.Transform[1], room.Transform[2]);
@@ -30,13 +39,10 @@ public class RoomLoadController : MonoBehaviour
         }
     }
 
-    private List<RoomInfo> LoadRoomPositions()
+    private void LoadRoomPositions(string data)
     {
-        using (var r = new StreamReader("./Assets/Scripts/RoomMapping/RoomSaving.json"))
-        {
-            string json = r.ReadToEnd();
-            var rooms = JsonConvert.DeserializeObject<List<RoomInfo>>(json);
-            return rooms;
-        }
+        Debug.Log("Reading from db...");
+        _roomList = JsonConvert.DeserializeObject<List<RoomInfo>>(data);
+        LoadRooms();
     }
 }

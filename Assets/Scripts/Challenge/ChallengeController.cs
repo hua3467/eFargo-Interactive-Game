@@ -1,6 +1,9 @@
 ﻿using System.Collections.Generic;
+using System.Runtime.ConstrainedExecution;
+using System.Security.Cryptography;
 using Interactable.Draggable;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.Serialization;
@@ -9,30 +12,31 @@ using UnityEngine.UI;
 public class ChallengeController : MonoBehaviour
 {
     public GameObject dialogPrefab;
-    public GameObject dialogueCanvas;
+    public GameObject dialogCanvas;
+    public GameObject journalDialog;
+    public Transform dialogTransform;
+    public Transform journalDialogTransform;
     public GameObject confirmButton;
     
-    [FormerlySerializedAs("Challenge")] 
     public Challenge challenge;
 
     private GameObject _dialog;
-    private readonly  List<SnapPoint> _tagPoints = new List<SnapPoint>(); 
+    private readonly List<SnapPoint> _tagPoints = new();
 
-    private void Start()
+    public void InitiateChallenge()
     {
-        
-        //challenge = new Challenge(new List<string> { "Let's play light black out hour", "Drag and drop me on any artificial light source", "TAG", "Describe the tag, how would you solve the issue", "<Journaling here>", "Tag successfully created" }, "Light", "Bulb", 250);
-
+        var output = "";
+        foreach (var str in challenge.Dialog)
+        {
+            output += str;
+        }
+        Debug.Log(output);
         var tagPointsObjects = GameObject.FindGameObjectsWithTag(challenge.TagType);
         foreach (var obj in tagPointsObjects)
         {
             _tagPoints.Add(obj.GetComponent<SnapPoint>());
         }
-        
-        if (challenge != null)
-        {
-            MakeDialog(challenge.Dialog.Dequeue(), Next);
-        }
+        MakeDialog(dialogPrefab, challenge.Dialog.Dequeue(), Next, dialogTransform);
     }
 
     public void FinishTagging()
@@ -42,7 +46,7 @@ public class ChallengeController : MonoBehaviour
         {
             if (tagPoint.AttachedGameObject == null || tagPoint.AttachedGameObject.name != challenge.MonsterName)
             {
-                MakeDialog("Oops! The tags are wrong, please try again", StartTagging);
+                MakeDialog(dialogPrefab, "Oops! The tags are wrong, please try again", StartTagging, dialogTransform);
                 return;
             }
         }
@@ -55,23 +59,30 @@ public class ChallengeController : MonoBehaviour
         if (challenge.Dialog.Count == 0)
         {
             ChallengeComplete();
+            Debug.Log("Challenge completed");
             return;
         }
-        var option = challenge.Dialog.Dequeue();
-        if (option.Equals("TAG"))
+        // split flag value from text here
+        var option = challenge.Dialog.Dequeue().Split('/');
+        switch (option[0])
         {
-            StartTagging();
-        }
-        else
-        {
-            MakeDialog(option, Next);
+            case "<TAG>":
+                StartTagging();
+                break;
+            case "<JOURNAL>":
+                MakeDialog(journalDialog, option[1], Next, journalDialogTransform);
+                break;
+            default:
+                MakeDialog(dialogPrefab, option[0], Next, dialogTransform);
+                break;
         }
     }
 
-    private void MakeDialog(string text, UnityAction buttonCallBack)
+    private void MakeDialog(GameObject dialogBox, string text, UnityAction buttonCallBack, Transform location)
     {
-        _dialog = Instantiate(dialogPrefab, dialogPrefab.transform.position, Quaternion.identity);
-        _dialog.transform.parent = dialogueCanvas.transform;
+        Debug.Log(buttonCallBack.Method);
+        _dialog = Instantiate(dialogBox, location.position, Quaternion.identity);
+        _dialog.transform.parent = dialogCanvas.transform;
         _dialog.transform.GetChild(1).GetComponent<Image>().sprite = challenge.Monster;
         _dialog.GetComponentInChildren<TextMeshProUGUI>().text = text;
         _dialog.GetComponentInChildren<Button>().onClick.AddListener(buttonCallBack);
@@ -85,6 +96,7 @@ public class ChallengeController : MonoBehaviour
 
     private void ChallengeComplete()
     {
-        // TODO: increment carbon coins for user here
+        // TODO: reward carbon coins here
+        challenge.Completed = true;
     }
 }
